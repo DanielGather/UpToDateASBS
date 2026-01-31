@@ -1,1 +1,31 @@
-<p>arbeitsschutz works!</p>
+<div class="max-w-80">
+  <h1 class="text-center p-4">Baua Aktuelles</h1>
+  <ul class="relative grid">
+    @for (item of items(); track item.link; let i = $index) {
+      <li
+        class="[z-index:var(--z)] h-full col-start-1 row-start-1 bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 hover:border-black transition hover:z-50"
+        [style.transform]="'translateY(' + i * 50 + 'px)'"
+        [style.--z]="i + 1"
+      >
+        <a
+          [href]="item.link"
+          target="_blank"
+          rel="noopener"
+          class="text-lg font-medium text-blue-700 hover:underline"
+        >
+          {{ item.title }}
+        </a>
+
+        <div class="text-sm text-gray-500 mt-1">
+          {{ item.pubDate | date: 'dd.MM.yyyy' }}
+        </div>
+
+        @if (item.description) {
+          <p class="text-gray-700 mt-2">
+            {{ item.description }}
+          </p>
+        }
+      </li>
+    }
+  </ul>
+</div>
