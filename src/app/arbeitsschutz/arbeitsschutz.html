@@ -1,31 +1,93 @@
-<div class="max-w-80">
-  <h1 class="text-center p-4">Baua Aktuelles</h1>
-  <ul class="relative grid">
-    @for (item of items(); track item.link; let i = $index) {
-      <li
-        class="[z-index:var(--z)] h-full col-start-1 row-start-1 bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 hover:border-black transition hover:z-50"
-        [style.transform]="'translateY(' + i * 50 + 'px)'"
-        [style.--z]="i + 1"
-      >
-        <a
-          [href]="item.link"
-          target="_blank"
-          rel="noopener"
-          class="text-lg font-medium text-blue-700 hover:underline"
-        >
-          {{ item.title }}
-        </a>
+<div class="max-w-5xl mx-auto p-6">
+  <!-- Tab-Leiste -->
+  <div class="flex gap-2 border-b border-gray-200">
+    <button
+      type="button"
+      (click)="setTab('rss')"
+      class="px-3 py-2 -mb-px border-b-2 transition"
+      [class.border-blue-600]="activeTab() === 'rss'"
+      [class.text-blue-700]="activeTab() === 'rss'"
+      [class.border-transparent]="activeTab() !== 'rss'"
+      [class.text-gray-600]="activeTab() !== 'rss'"
+      [class.hover:bg-gray-300]="activeTab() !== 'rss'"
+      [class.hover:rounded]="activeTab() !== 'rss'"
+    >
+      BAuA RSS
+    </button>
 
-        <div class="text-sm text-gray-500 mt-1">
-          {{ item.pubDate | date: 'dd.MM.yyyy' }}
+    <button
+      type="button"
+      (click)="setTab('news')"
+      class="px-3 py-2 -mb-px border-b-2 transition"
+      [class.border-blue-600]="activeTab() === 'news'"
+      [class.text-blue-700]="activeTab() === 'news'"
+      [class.border-transparent]="activeTab() !== 'news'"
+      [class.text-gray-600]="activeTab() !== 'news'"
+      [class.hover:bg-gray-300]="activeTab() !== 'news'"
+      [class.hover:rounded]="activeTab() !== 'news'"
+    >
+      News
+    </button>
+
+    <button
+      type="button"
+      (click)="setTab('settings')"
+      class="px-3 py-2 -mb-px border-b-2 transition"
+      [class.border-blue-600]="activeTab() === 'settings'"
+      [class.text-blue-700]="activeTab() === 'settings'"
+      [class.border-transparent]="activeTab() !== 'settings'"
+      [class.text-gray-600]="activeTab() !== 'settings'"
+      [class.hover:bg-gray-300]="activeTab() !== 'settings'"
+      [class.hover:rounded]="activeTab() !== 'settings'"
+    >
+      Einstellungen
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="pt-6">
+    @switch (activeTab()) {
+      @case ('rss') {
+        <div class="max-w-80">
+          <h1 class="text-center p-4">Baua Aktuelles</h1>
+          <ul class="relative grid">
+            @for (item of items(); track item.link; let i = $index) {
+              <li
+                class="[z-index:var(--z)] h-full col-start-1 row-start-1 bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 hover:border-black transition hover:z-50"
+                [style.transform]="'translateY(' + i * 50 + 'px)'"
+                [style.--z]="i + 1"
+              >
+                <a
+                  [href]="item.link"
+                  target="_blank"
+                  rel="noopener"
+                  class="text-lg font-medium text-blue-700 hover:underline"
+                >
+                  {{ item.title }}
+                </a>
+
+                <div class="text-sm text-gray-500 mt-1">
+                  {{ item.pubDate | date: 'dd.MM.yyyy' }}
+                </div>
+
+                @if (item.description) {
+                  <p class="text-gray-700 mt-2">
+                    {{ item.description }}
+                  </p>
+                }
+              </li>
+            }
+          </ul>
         </div>
-
-        @if (item.description) {
-          <p class="text-gray-700 mt-2">
-            {{ item.description }}
-          </p>
-        }
-      </li>
+      }
+      @case ('news') {
+        <p>news</p>
+        <!-- <app-news></app-news> -->
+      }
+      @case ('settings') {
+        <p>settings</p>
+        <!-- <app-settings></app-settings> -->
+      }
     }
-  </ul>
+  </div>
 </div>
